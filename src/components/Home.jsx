@@ -60,7 +60,7 @@ export const Home = () => {
   }, [pasteId, Allpastes]);
 
   return (
-    <div className="max-w-8xl mx-auto px-4 py-10 bg-gradient-to-r from-blue-600 to-blue-100">
+    <div className="max-w-8xl mx-auto px-4 py-10 bg-gradient-to-r from-green-600 to-green-100">
       <h1 className="text-3xl sm:text-4xl font-bold text-center text-blue-600 mb-8">
         📝 Paste Sharing App
       </h1>

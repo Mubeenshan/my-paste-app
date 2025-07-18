@@ -1,41 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaCopy } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const View = () => {
-  const [view, setView] = useState("");
   const { id } = useParams();
-  const Allpastes = useSelector((state) => state.paste.pastes);
+  const allPastes = useSelector((state) => state.paste.pastes);
+  const paste = allPastes.find((p) => p._id === id);
 
-  const paste = Allpastes.filter((p) => p._id === id)[0];
+  if (!paste) {
+    return (
+      <div className="text-center text-lg text-gray-500 mt-10">
+        Paste not found. Please check the URL or create a new paste.
+      </div>
+    );
+  }
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(paste.content);
+    toast.success("Content copied to clipboard!");
+  };
 
   return (
-    <>
-      <div className="flex flex-row justify-center items-center gap-4 bg-gray-100 space-content-between mt-4 min-w-full ">
+    <div className="max-w-7xl mx-auto p-4 mt-6 bg-white shadow-lg rounded-lg overflow-y-auto overflow-hidden">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <input
           type="text"
-          className="border border-gray-300  rounded-2xl p-3 w-[100%] cursor-not-allowed "
-          placeholder="Type Title..."
-          value={paste?.title}
+          className="border border-gray-300 rounded-2xl px-4 py-3 w-full bg-gray-100 font-semibold text-gray-700 cursor-not-allowed"
+          value={paste.title}
           disabled
-          onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
-      <div className="relative">
-        {/* <div className="absolute top-15 right-8">{<FaCopy />}</div> */}
+
+      <div className="relative mt-4">
+        <button
+          onClick={handleCopy}
+          className="absolute top-5 right-5 text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-full shadow-md transition-all"
+        >
+          <FaCopy />
+        </button>
         <textarea
           name="pasteContent"
           id="pasteContent"
-          className="border border-gray-300  rounded mt-4  w-full text-black p-4 hover:bg-gray-50 cursor-not-allowed"
-          rows={25}
-          value={paste?.content}
+          className="border border-gray-300 rounded-lg mt-2 w-full text-gray-800 p-4 bg-gray-100 cursor-not-allowed resize-none shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={30}
+          value={paste.content}
           disabled
-          placeholder="Paste your content here..."
-          onChange={(e) => setPasteContent(e.target.value)}
+          placeholder="Paste content..."
         ></textarea>
       </div>
-    </>
+    </div>
   );
 };
 

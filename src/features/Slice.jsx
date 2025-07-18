@@ -44,7 +44,6 @@ const pasteSlice = createSlice({
       localStorage.removeItem("pastes");
       toast.success("All pastes deleted successfully!");
     },
-    shareToPaste: (state, action) => {},
   },
 });
 

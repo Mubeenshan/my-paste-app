@@ -31,7 +31,6 @@ const Paste = () => {
   }
 
   const handleDelete = (pasteId) => dispatch(deleteToPaste(pasteId));
-  const sharePaste = (pasteId) => dispatch(shareToPaste(pasteId));
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
@@ -85,11 +84,9 @@ const Paste = () => {
               >
                 <FaCopy />
               </button>
-
-              <a href={`/pastes/${paste._id}`} title="View">
+              <a href={`/pastes/${paste?._id}`} title="View">
                 <FaEye className="hover:text-blue-600" />
               </a>
-
               <button
                 onClick={() => handleShareLink(paste._id)}
                 title="Share"
@@ -101,7 +98,6 @@ const Paste = () => {
               <a href={`/?pasteId=${paste._id}`} title="Edit">
                 <FaEdit className="hover:text-yellow-500" />
               </a>
-
               <button
                 onClick={() => handleDelete(paste._id)}
                 title="Delete"
